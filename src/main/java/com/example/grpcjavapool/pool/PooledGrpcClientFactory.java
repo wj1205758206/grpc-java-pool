@@ -1,5 +1,10 @@
 package com.example.grpcjavapool.pool;
 
+import com.example.grpcjavapool.gen.GreeterGrpc;
+import io.grpc.CallOptions;
+import io.grpc.ConnectivityState;
+import io.grpc.InternalChannelz;
+import io.grpc.ManagedChannel;
 import org.apache.commons.pool2.BaseKeyedPooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
@@ -29,7 +34,37 @@ public class PooledGrpcClientFactory extends BaseKeyedPooledObjectFactory<String
      */
     @Override
     public GrpcClient create(String key) throws Exception {
-        return new GrpcClient(key, port);
+        final String host = key;
+        final int port = this.port;
+        final GrpcClient grpcClient = new GrpcClient(host, port);
+        try {
+            // 判断new出来的GrpcClient的channel或者stub是否为null
+            if (grpcClient.getChannel() == null || grpcClient.getBlockingStub() == null) {
+                System.out.println("new GrpcClient fail, channel or stub is null");
+                return null;
+            }
+            ManagedChannel channel = grpcClient.getChannel();
+            // 如果channel状态是关闭或者终止，则认为该channel不可用
+            if (channel.isShutdown() || channel.isTerminated()){
+                System.out.println("channel isShutdown or isTerminated, create fail");
+                return null;
+            }
+            // 对于处于瞬态_故障状态的channel，短路退避计时器并使其立即重新连接
+            ConnectivityState state = channel.getState(true);
+            if (state == ConnectivityState.TRANSIENT_FAILURE){
+                channel.resetConnectBackoff();
+            }
+            // 使通道进入 IDLE 状态
+            channel.enterIdle();
+            if (state == ConnectivityState.IDLE){
+                System.out.println("this channel state is IDLE, channel:" + channel);
+                System.out.println("create GrpcClient finished");
+            }
+        }catch (Exception e){
+            grpcClient.shutdown();
+            System.out.println("create method exception");
+        }
+        return grpcClient;
     }
 
     /**

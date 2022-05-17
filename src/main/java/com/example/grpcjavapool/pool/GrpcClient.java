@@ -15,12 +15,14 @@ import java.util.concurrent.TimeUnit;
 public class GrpcClient {
 
     // 在gRPC官网中《最佳性能实践》章节建议复用channel和stub
-    private final ManagedChannel channel; // 定义一个channel
+    private  ManagedChannel channel; // 定义一个channel
     private GreeterGrpc.GreeterBlockingStub blockingStub; // 定义一个阻塞式同步存根
 
     public GrpcClient(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         this.blockingStub = GreeterGrpc.newBlockingStub(channel).withCompression("gzip");
+        // this.channel = null;
+        // this.blockingStub = null;
     }
 
     // 定义客户端方法
@@ -28,6 +30,8 @@ public class GrpcClient {
         HelloRequest request = HelloRequest.newBuilder().setName(name).build();
         HelloReply response;
         try {
+            // channel = ManagedChannelBuilder.forAddress("127.0.0.1", 9099).usePlaintext().build();
+            // blockingStub = GreeterGrpc.newBlockingStub(channel).withCompression("gzip");
             response = blockingStub.sayHello(request);
         } catch (StatusRuntimeException e) {
             System.out.println("gRPC call sayHello fail: " + e.getMessage());
@@ -42,6 +46,18 @@ public class GrpcClient {
         } catch (InterruptedException e) {
             System.out.println("channel shutdown exception: " + e.getMessage());
         }
+    }
+
+    public ManagedChannel getChannel() {
+        return channel;
+    }
+
+    public GreeterGrpc.GreeterBlockingStub getBlockingStub() {
+        return blockingStub;
+    }
+
+    public void setBlockingStub(GreeterGrpc.GreeterBlockingStub blockingStub) {
+        this.blockingStub = blockingStub;
     }
 
     @Override

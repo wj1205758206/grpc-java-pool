@@ -25,6 +25,10 @@ public class GrpcClientPool {
         poolConfig.setLifo(true);
         poolConfig.setMinEvictableIdleTimeMillis(1000L * 60L * 30L);
         poolConfig.setBlockWhenExhausted(true);
+        poolConfig.setTestOnBorrow(true);
+        poolConfig.setTestOnCreate(true);
+        poolConfig.setTestOnReturn(true);
+        poolConfig.setTestWhileIdle(true);
         grpcClientPool = new GenericKeyedObjectPool<>(new PooledGrpcClientFactory(), poolConfig);
     }
 

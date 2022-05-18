@@ -8,11 +8,13 @@ public interface HelloReplyOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>optional string message = 1;</code>
+   * <code>string message = 1;</code>
+   * @return The message.
    */
   java.lang.String getMessage();
   /**
-   * <code>optional string message = 1;</code>
+   * <code>string message = 1;</code>
+   * @return The bytes for message.
    */
   com.google.protobuf.ByteString
       getMessageBytes();

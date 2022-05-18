@@ -1,11 +1,7 @@
 package com.example.grpcjavapool.pool;
 
-import com.example.grpcjavapool.gen.GreeterGrpc;
-import com.example.grpcjavapool.gen.HelloReply;
-import com.example.grpcjavapool.gen.HelloRequest;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
+import com.example.grpcjavapool.gen.*;
+import io.grpc.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +11,14 @@ import java.util.concurrent.TimeUnit;
 public class GrpcClient {
 
     // 在gRPC官网中《最佳性能实践》章节建议复用channel和stub
-    private  ManagedChannel channel; // 定义一个channel
+    private ManagedChannel channel; // 定义一个channel
     private GreeterGrpc.GreeterBlockingStub blockingStub; // 定义一个阻塞式同步存根
 
     public GrpcClient(String host, int port) {
-        this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+        this.channel = ManagedChannelBuilder.forAddress(host, port)
+                .keepAliveTime(10, TimeUnit.SECONDS) // 设置channel保活
+                .usePlaintext()
+                .build();
         this.blockingStub = GreeterGrpc.newBlockingStub(channel).withCompression("gzip");
         // this.channel = null;
         // this.blockingStub = null;
@@ -48,6 +47,22 @@ public class GrpcClient {
         }
     }
 
+    public boolean ping() {
+        System.out.println("grpcClient try to ping...");
+        Ping pingRequest = Ping.newBuilder().setPing("PING").build();
+        Pong pongResponse = null;
+        try {
+            // 设置ping请求的超时时间，要求客户端在1s之内收到PONG
+            pongResponse = blockingStub
+                    .withDeadlineAfter(1, TimeUnit.SECONDS).pingPong(pingRequest);
+        } catch (Exception e) {
+            System.out.println("grpcClient call ping exception");
+        }
+        // 如果客户端收到PONG，并且channel状态是ready，说明当前客户端能ping通
+        return "PONG".equals(pongResponse.getPong())
+                && this.channel.getState(true) == ConnectivityState.READY;
+    }
+
     public ManagedChannel getChannel() {
         return channel;
     }
@@ -67,4 +82,6 @@ public class GrpcClient {
                 ", blockingStub=" + blockingStub +
                 '}';
     }
+
+
 }

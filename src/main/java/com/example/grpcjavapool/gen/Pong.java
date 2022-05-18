@@ -5,29 +5,29 @@ package com.example.grpcjavapool.gen;
 
 /**
  * <pre>
- *定义了一个消息请求体
+ *pong消息请求体
  * </pre>
  *
- * Protobuf type {@code helloworld.HelloRequest}
+ * Protobuf type {@code helloworld.Pong}
  */
-public final class HelloRequest extends
+public final class Pong extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:helloworld.HelloRequest)
-    HelloRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:helloworld.Pong)
+    PongOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use HelloRequest.newBuilder() to construct.
-  private HelloRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use Pong.newBuilder() to construct.
+  private Pong(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private HelloRequest() {
-    name_ = "";
+  private Pong() {
+    pong_ = "";
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new HelloRequest();
+    return new Pong();
   }
 
   @java.lang.Override
@@ -35,7 +35,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private HelloRequest(
+  private Pong(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -56,7 +56,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            name_ = s;
+            pong_ = s;
             break;
           }
           default: {
@@ -80,49 +80,49 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_HelloRequest_descriptor;
+    return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_Pong_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_HelloRequest_fieldAccessorTable
+    return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_Pong_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.example.grpcjavapool.gen.HelloRequest.class, com.example.grpcjavapool.gen.HelloRequest.Builder.class);
+            com.example.grpcjavapool.gen.Pong.class, com.example.grpcjavapool.gen.Pong.Builder.class);
   }
 
-  public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+  public static final int PONG_FIELD_NUMBER = 1;
+  private volatile java.lang.Object pong_;
   /**
-   * <code>string name = 1;</code>
-   * @return The name.
+   * <code>string pong = 1;</code>
+   * @return The pong.
    */
   @java.lang.Override
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
+  public java.lang.String getPong() {
+    java.lang.Object ref = pong_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      name_ = s;
+      pong_ = s;
       return s;
     }
   }
   /**
-   * <code>string name = 1;</code>
-   * @return The bytes for name.
+   * <code>string pong = 1;</code>
+   * @return The bytes for pong.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getNameBytes() {
-    java.lang.Object ref = name_;
+      getPongBytes() {
+    java.lang.Object ref = pong_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      name_ = b;
+      pong_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -143,8 +143,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
+    if (!getPongBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, pong_);
     }
     unknownFields.writeTo(output);
   }
@@ -155,8 +155,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+    if (!getPongBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, pong_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -168,13 +168,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.example.grpcjavapool.gen.HelloRequest)) {
+    if (!(obj instanceof com.example.grpcjavapool.gen.Pong)) {
       return super.equals(obj);
     }
-    com.example.grpcjavapool.gen.HelloRequest other = (com.example.grpcjavapool.gen.HelloRequest) obj;
+    com.example.grpcjavapool.gen.Pong other = (com.example.grpcjavapool.gen.Pong) obj;
 
-    if (!getName()
-        .equals(other.getName())) return false;
+    if (!getPong()
+        .equals(other.getPong())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -186,76 +186,76 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getName().hashCode();
+    hash = (37 * hash) + PONG_FIELD_NUMBER;
+    hash = (53 * hash) + getPong().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(byte[] data)
+  public static com.example.grpcjavapool.gen.Pong parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(java.io.InputStream input)
+  public static com.example.grpcjavapool.gen.Pong parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseDelimitedFrom(java.io.InputStream input)
+  public static com.example.grpcjavapool.gen.Pong parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseDelimitedFrom(
+  public static com.example.grpcjavapool.gen.Pong parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.example.grpcjavapool.gen.HelloRequest parseFrom(
+  public static com.example.grpcjavapool.gen.Pong parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -268,7 +268,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.example.grpcjavapool.gen.HelloRequest prototype) {
+  public static Builder newBuilder(com.example.grpcjavapool.gen.Pong prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -285,29 +285,29 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   *定义了一个消息请求体
+   *pong消息请求体
    * </pre>
    *
-   * Protobuf type {@code helloworld.HelloRequest}
+   * Protobuf type {@code helloworld.Pong}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:helloworld.HelloRequest)
-      com.example.grpcjavapool.gen.HelloRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:helloworld.Pong)
+      com.example.grpcjavapool.gen.PongOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_HelloRequest_descriptor;
+      return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_Pong_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_HelloRequest_fieldAccessorTable
+      return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_Pong_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.example.grpcjavapool.gen.HelloRequest.class, com.example.grpcjavapool.gen.HelloRequest.Builder.class);
+              com.example.grpcjavapool.gen.Pong.class, com.example.grpcjavapool.gen.Pong.Builder.class);
     }
 
-    // Construct using com.example.grpcjavapool.gen.HelloRequest.newBuilder()
+    // Construct using com.example.grpcjavapool.gen.Pong.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -325,7 +325,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      name_ = "";
+      pong_ = "";
 
       return this;
     }
@@ -333,17 +333,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_HelloRequest_descriptor;
+      return com.example.grpcjavapool.gen.HelloWorldProto.internal_static_helloworld_Pong_descriptor;
     }
 
     @java.lang.Override
-    public com.example.grpcjavapool.gen.HelloRequest getDefaultInstanceForType() {
-      return com.example.grpcjavapool.gen.HelloRequest.getDefaultInstance();
+    public com.example.grpcjavapool.gen.Pong getDefaultInstanceForType() {
+      return com.example.grpcjavapool.gen.Pong.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.example.grpcjavapool.gen.HelloRequest build() {
-      com.example.grpcjavapool.gen.HelloRequest result = buildPartial();
+    public com.example.grpcjavapool.gen.Pong build() {
+      com.example.grpcjavapool.gen.Pong result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -351,9 +351,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.example.grpcjavapool.gen.HelloRequest buildPartial() {
-      com.example.grpcjavapool.gen.HelloRequest result = new com.example.grpcjavapool.gen.HelloRequest(this);
-      result.name_ = name_;
+    public com.example.grpcjavapool.gen.Pong buildPartial() {
+      com.example.grpcjavapool.gen.Pong result = new com.example.grpcjavapool.gen.Pong(this);
+      result.pong_ = pong_;
       onBuilt();
       return result;
     }
@@ -392,18 +392,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.example.grpcjavapool.gen.HelloRequest) {
-        return mergeFrom((com.example.grpcjavapool.gen.HelloRequest)other);
+      if (other instanceof com.example.grpcjavapool.gen.Pong) {
+        return mergeFrom((com.example.grpcjavapool.gen.Pong)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.example.grpcjavapool.gen.HelloRequest other) {
-      if (other == com.example.grpcjavapool.gen.HelloRequest.getDefaultInstance()) return this;
-      if (!other.getName().isEmpty()) {
-        name_ = other.name_;
+    public Builder mergeFrom(com.example.grpcjavapool.gen.Pong other) {
+      if (other == com.example.grpcjavapool.gen.Pong.getDefaultInstance()) return this;
+      if (!other.getPong().isEmpty()) {
+        pong_ = other.pong_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -421,11 +421,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.example.grpcjavapool.gen.HelloRequest parsedMessage = null;
+      com.example.grpcjavapool.gen.Pong parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.example.grpcjavapool.gen.HelloRequest) e.getUnfinishedMessage();
+        parsedMessage = (com.example.grpcjavapool.gen.Pong) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -435,78 +435,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object name_ = "";
+    private java.lang.Object pong_ = "";
     /**
-     * <code>string name = 1;</code>
-     * @return The name.
+     * <code>string pong = 1;</code>
+     * @return The pong.
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
+    public java.lang.String getPong() {
+      java.lang.Object ref = pong_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        name_ = s;
+        pong_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string name = 1;</code>
-     * @return The bytes for name.
+     * <code>string pong = 1;</code>
+     * @return The bytes for pong.
      */
     public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
+        getPongBytes() {
+      java.lang.Object ref = pong_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        name_ = b;
+        pong_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string name = 1;</code>
-     * @param value The name to set.
+     * <code>string pong = 1;</code>
+     * @param value The pong to set.
      * @return This builder for chaining.
      */
-    public Builder setName(
+    public Builder setPong(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      name_ = value;
+      pong_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string pong = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearName() {
+    public Builder clearPong() {
       
-      name_ = getDefaultInstance().getName();
+      pong_ = getDefaultInstance().getPong();
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
-     * @param value The bytes for name to set.
+     * <code>string pong = 1;</code>
+     * @param value The bytes for pong to set.
      * @return This builder for chaining.
      */
-    public Builder setNameBytes(
+    public Builder setPongBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      name_ = value;
+      pong_ = value;
       onChanged();
       return this;
     }
@@ -523,41 +523,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:helloworld.HelloRequest)
+    // @@protoc_insertion_point(builder_scope:helloworld.Pong)
   }
 
-  // @@protoc_insertion_point(class_scope:helloworld.HelloRequest)
-  private static final com.example.grpcjavapool.gen.HelloRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:helloworld.Pong)
+  private static final com.example.grpcjavapool.gen.Pong DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.example.grpcjavapool.gen.HelloRequest();
+    DEFAULT_INSTANCE = new com.example.grpcjavapool.gen.Pong();
   }
 
-  public static com.example.grpcjavapool.gen.HelloRequest getDefaultInstance() {
+  public static com.example.grpcjavapool.gen.Pong getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HelloRequest>
-      PARSER = new com.google.protobuf.AbstractParser<HelloRequest>() {
+  private static final com.google.protobuf.Parser<Pong>
+      PARSER = new com.google.protobuf.AbstractParser<Pong>() {
     @java.lang.Override
-    public HelloRequest parsePartialFrom(
+    public Pong parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new HelloRequest(input, extensionRegistry);
+      return new Pong(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<HelloRequest> parser() {
+  public static com.google.protobuf.Parser<Pong> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<HelloRequest> getParserForType() {
+  public com.google.protobuf.Parser<Pong> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.example.grpcjavapool.gen.HelloRequest getDefaultInstanceForType() {
+  public com.example.grpcjavapool.gen.Pong getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

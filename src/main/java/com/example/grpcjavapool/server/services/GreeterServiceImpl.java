@@ -1,14 +1,9 @@
 package com.example.grpcjavapool.server.services;
 
-import com.example.grpcjavapool.gen.GreeterGrpc;
-import com.example.grpcjavapool.gen.HelloReply;
-import com.example.grpcjavapool.gen.HelloRequest;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import com.example.grpcjavapool.gen.*;
 import io.grpc.stub.StreamObserver;
 
 public class GreeterServiceImpl extends GreeterGrpc.GreeterImplBase {
-    private static final Logger LOG = LoggerFactory.getLogger(GreeterServiceImpl.class);
 
     public GreeterServiceImpl() {
     }
@@ -23,5 +18,13 @@ public class GreeterServiceImpl extends GreeterGrpc.GreeterImplBase {
                 .setMessage("I'm Server, hello! " + request.getName()).build();
         replyStreamObserver.onNext(response);
         replyStreamObserver.onCompleted();
+    }
+
+    @Override
+    public void pingPong(Ping request, StreamObserver<Pong> responseObserver) {
+        System.out.println("GrpcServer receive ping... " + request.getDefaultInstanceForType());
+        Pong pong = Pong.newBuilder().setPong("PONG").build();
+        responseObserver.onNext(pong);
+        responseObserver.onCompleted();
     }
 }

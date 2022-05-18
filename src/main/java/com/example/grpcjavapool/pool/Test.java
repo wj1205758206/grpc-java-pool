@@ -13,13 +13,16 @@ public class Test {
         poolConfig.setMaxTotalPerKey(10);
         poolConfig.setLifo(true);
         poolConfig.setBlockWhenExhausted(true);
+        poolConfig.setTestOnBorrow(true);
+        poolConfig.setTestOnReturn(true);
+        poolConfig.setTestOnCreate(true);
         GenericKeyedObjectPool<String, GrpcClient> pool = new GenericKeyedObjectPool<>(pooledGrpcClientFactory, poolConfig);
         return pool;
     }
 
     public static void main(String[] args) throws InterruptedException {
         GenericKeyedObjectPool<String, GrpcClient> clientPool = getClientPool();
-
+        long t1 = System.currentTimeMillis();
         // 创建10个线程，每个线程发送10次请求
         for (int i = 0; i < 10; i++) {
             Thread t = new Thread(new Runnable() {
@@ -38,17 +41,22 @@ public class Test {
                                     + "getNumIdle:" + clientPool.getNumIdle(key)
                                     + "  getNumActive" + clientPool.getNumActive(key));
                             clientPool.returnObject(key, grpcClient);
+
                         }
+                        // Thread.sleep(5000L);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
             t.start();
-            if(i%2==0) {
-                Thread.sleep(5000L);
-            }
+//            if(i%2==0) {
+//                Thread.sleep(5000L);
+//            }
         }
+        long t2 = System.currentTimeMillis();
+
+        System.out.println("~~~~~~~~~~~~~ " + (t2 - t1));
     }
 
 }

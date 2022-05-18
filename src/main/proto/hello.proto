@@ -10,6 +10,7 @@ package helloworld;
 //定义了一个service
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc PingPong(Ping) returns (Pong){}
 }
 
 //定义了一个消息请求体
@@ -20,4 +21,14 @@ message HelloRequest {
 //定义了一个消息回复体
 message HelloReply {
   string message = 1;
+}
+
+//ping消息请求体
+message Ping {
+  string ping = 1;
+}
+
+//pong消息请求体
+message Pong {
+  string pong = 1;
 }

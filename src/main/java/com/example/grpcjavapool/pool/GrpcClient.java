@@ -42,6 +42,9 @@ public class GrpcClient {
     public void shutdown() {
         try {
             channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+            if (channel.isShutdown() || channel.isTerminated()) {
+                System.out.println("the channel has shutdown or terminated: " + channel.toString());
+            }
         } catch (InterruptedException e) {
             System.out.println("channel shutdown exception: " + e.getMessage());
         }

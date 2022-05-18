@@ -1,5 +1,6 @@
 package com.example.grpcjavapool.pool;
 
+import com.example.grpcjavapool.gen.GreeterGrpc;
 import io.grpc.*;
 import org.apache.commons.pool2.BaseKeyedPooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
@@ -87,7 +88,22 @@ public class PooledGrpcClientFactory extends BaseKeyedPooledObjectFactory<String
     @Override
     public void destroyObject(String key, PooledObject<GrpcClient> p) throws Exception {
         System.out.println("factory destroy pooledObject: " + p.toString());
-        super.destroyObject(key, p);
+        GrpcClient grpcClient = p.getObject();
+        ManagedChannel channel = grpcClient.getChannel();
+        GreeterGrpc.GreeterBlockingStub blockingStub = grpcClient.getBlockingStub();
+        if (channel != null) {
+            try {
+                // 停止channel
+                grpcClient.shutdown();
+                // 如果channel已停止或者已终止，则将channel和stub置为null，方便GC
+                if (channel.isShutdown() || channel.isTerminated()) {
+                    channel = null;
+                    blockingStub = null;
+                }
+            } catch (Exception e) {
+                System.out.println("destroy grpcClient fail");
+            }
+        }
     }
 
     /**

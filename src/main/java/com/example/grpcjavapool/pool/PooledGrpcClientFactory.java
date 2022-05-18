@@ -3,7 +3,12 @@ package com.example.grpcjavapool.pool;
 import io.grpc.*;
 import org.apache.commons.pool2.BaseKeyedPooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.PooledObjectState;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 /**
  * 工厂类，用于 创建/销毁/激活 池化后的客户端对象
@@ -33,6 +38,7 @@ public class PooledGrpcClientFactory extends BaseKeyedPooledObjectFactory<String
         final String host = key;
         final int port = this.port;
         final GrpcClient grpcClient = new GrpcClient(host, port);
+        System.out.println("factory create grpcClient: " + grpcClient.toString());
         try {
             // 判断new出来的GrpcClient的channel或者stub是否为null
             if (grpcClient.getChannel() == null || grpcClient.getBlockingStub() == null) {
@@ -74,12 +80,13 @@ public class PooledGrpcClientFactory extends BaseKeyedPooledObjectFactory<String
      */
     @Override
     public PooledObject<GrpcClient> wrap(GrpcClient grpcClient) {
+        System.out.println("factory wrap grpcClient: " + grpcClient.toString());
         return new DefaultPooledObject<>(grpcClient);
     }
 
     @Override
     public void destroyObject(String key, PooledObject<GrpcClient> p) throws Exception {
-        System.out.println(",,,,,,,,,,,,,,,,");
+        System.out.println("factory destroy pooledObject: " + p.toString());
         super.destroyObject(key, p);
     }
 
@@ -95,7 +102,7 @@ public class PooledGrpcClientFactory extends BaseKeyedPooledObjectFactory<String
      */
     @Override
     public boolean validateObject(String key, PooledObject<GrpcClient> p) {
-        System.out.println("+++++++++++");
+        System.out.println("factory validate pooledObject: " + p.toString());
         String host = key;
         GrpcClient grpcClient = p.getObject();
         try {
@@ -114,15 +121,43 @@ public class PooledGrpcClientFactory extends BaseKeyedPooledObjectFactory<String
         return false;
     }
 
+    /**
+     * 激活池化的客户端对象
+     *
+     * @param key
+     * @param p
+     * @throws Exception
+     */
     @Override
     public void activateObject(String key, PooledObject<GrpcClient> p) throws Exception {
-        System.out.println("))))))))))))))");
+        System.out.println("factory activate pooledObject: " + p.toString());
+
+        // 激活方法是对池化对象进行一些初始化操作，比如Jedis在激活方法中设置了database
+        // 可以根据具体的实际业务做一下使用前的初始化操作
+        // 为了提现激活方法的调用，这里获取了一下当前池化对象的状态，当然也可以什么都不做
+        if (p.getState() == PooledObjectState.ALLOCATED) {
+            System.out.println("the pooled object state is ALLOCATED, activating...");
+        }
         super.activateObject(key, p);
     }
 
+    /**
+     * 钝化池化的客户端对象
+     * 这个方法和激活方法是一对相反的操作，激活方法是进行初始化，而钝化方法则是进行一些反初始化
+     * 我们之所以用连接池，就是为了减少创建、断开、销毁等一些时间和空间的上的开销
+     * 反初始化可以保持核心资源不释放，只释放一些轻量资源
+     *
+     * @param key
+     * @param p
+     * @throws Exception
+     */
     @Override
     public void passivateObject(String key, PooledObject<GrpcClient> p) throws Exception {
-        System.out.println("************");
+        System.out.println("factory passivate pooledObject: " + p.toString());
+        // 为了提现钝化方法的调用，这里获取了一下当前池化对象的状态，当然也可以什么都不做
+        if (p.getState() == PooledObjectState.RETURNING) {
+            System.out.println("the pooled object state is RETURNING, passivating...");
+        }
         super.passivateObject(key, p);
     }
 }

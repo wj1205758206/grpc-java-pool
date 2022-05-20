@@ -16,7 +16,9 @@ public class GrpcClient {
 
     public GrpcClient(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port)
-                .keepAliveTime(10, TimeUnit.SECONDS) // 设置channel保活
+                .keepAliveTime(10, TimeUnit.SECONDS) // 设置channel保活 发送PING帧最小时间间隔，用来确定空闲连接是否仍然有效
+                .keepAliveTimeout(3,TimeUnit.SECONDS) // 超过KeepAliveTimeout，关闭连接
+                .keepAliveWithoutCalls(true) // 即使没有请求进行，也可以发送keepalive ping
                 .usePlaintext()
                 .build();
         this.blockingStub = GreeterGrpc.newBlockingStub(channel).withCompression("gzip");

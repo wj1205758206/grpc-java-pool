@@ -9,10 +9,6 @@ public class GrpcJavaPoolApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GrpcJavaPoolApplication.class, args);
-
-        // 启动GrpcServer
-        GrpcServer grpcServer = new GrpcServer();
-
     }
 
 }

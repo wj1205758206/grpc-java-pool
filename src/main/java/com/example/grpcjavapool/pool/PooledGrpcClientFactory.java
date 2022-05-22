@@ -7,9 +7,6 @@ import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.PooledObjectState;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 /**
  * 工厂类，用于 创建/销毁/激活 池化后的客户端对象

@@ -1,0 +1,9 @@
+server:
+  port: 8900
+zookeeper:
+  server:  localhost:2181
+  namespace: grpc-zk             #zk连接认证 username:passwd
+  sessionTimeoutMs: 60000     #会话超时时间(毫秒),连接断开后，其它客户端还能请到临时节点的时间(还受tickTime设置影响[2倍-20倍])
+  connectionTimeoutMs: 5000   #连接创建超时时间(毫秒)
+  maxRetries: 1               #最大重试次数
+  baseSleepTimeMs: 1000       #初始sleep时间(毫秒)

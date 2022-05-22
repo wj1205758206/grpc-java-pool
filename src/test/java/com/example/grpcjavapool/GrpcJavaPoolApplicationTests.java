@@ -1,14 +1,23 @@
 package com.example.grpcjavapool;
 
-import com.example.grpcjavapool.pool.GrpcClient;
-import com.example.grpcjavapool.pool.GrpcClientPool;
+import com.example.grpcjavapool.server.zookeeper.CustomWatcher;
+import com.example.grpcjavapool.server.zookeeper.ZkUtil;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.annotations.Test;
 
 import javax.annotation.Resource;
 
-
 @SpringBootTest
-class GrpcJavaPoolApplicationTests {
+public class GrpcJavaPoolApplicationTests {
+    @Resource
+    ZkUtil zkUtil;
+
+
+    @Test
+    public void test(){
+        String data = zkUtil.getData("/test", new CustomWatcher());
+        System.out.println(data);
+    }
 
 }

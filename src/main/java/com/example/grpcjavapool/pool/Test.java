@@ -1,16 +1,20 @@
 package com.example.grpcjavapool.pool;
 
 
+import com.example.grpcjavapool.server.zookeeper.ZkUtil;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Test {
+    private static final Logger logger = LoggerFactory.getLogger(Test.class);
 
     public static void main(String[] args) throws InterruptedException {
         GenericKeyedObjectPoolConfig poolConfig = new GenericKeyedObjectPoolConfig();
-        poolConfig.setMaxIdlePerKey(2);
+        poolConfig.setMaxIdlePerKey(5);
         poolConfig.setMinIdlePerKey(0);
-        poolConfig.setMaxTotal(2);
-        poolConfig.setMaxTotalPerKey(2);
+        poolConfig.setMaxTotal(20);
+        poolConfig.setMaxTotalPerKey(10);
         poolConfig.setLifo(true);
         poolConfig.setBlockWhenExhausted(true); // 池满策略设置，true:池满则阻塞
         poolConfig.setMaxWaitMillis(3000); // 阻塞时最大等待时间
@@ -39,8 +43,8 @@ public class Test {
                             grpcClient.greet("hello, " + key
                                     + "! I'm [" + Thread.currentThread().getName() + "]-"
                                     + "[client-" + i + "]");
-                            System.out.println("[grpcClient]:" + grpcClient.toString());
-                            System.out.println("[pool info] "
+                            logger.info("[grpcClient]:" + grpcClient.toString());
+                            logger.info("[pool info] "
                                     + "getNumIdle:" + clientPool.getGrpcClientPool().getNumActive(key)
                                     + "  getNumActive" + clientPool.getGrpcClientPool().getNumActive(key));
                             clientPool.returnGrpcClient(key, grpcClient);
@@ -48,7 +52,7 @@ public class Test {
                         }
                         // Thread.sleep(5000L);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage());
                     }
                 }
             });
@@ -61,7 +65,7 @@ public class Test {
         }
         long t2 = System.currentTimeMillis();
 
-        System.out.println("~~~~~~~~~~~~~ " + (t2 - t1));
+        logger.info("~~~~~~~~~~~~~ " + (t2 - t1));
     }
 
 }

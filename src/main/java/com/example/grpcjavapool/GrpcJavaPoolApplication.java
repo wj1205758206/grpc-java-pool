@@ -23,11 +23,8 @@ public class GrpcJavaPoolApplication {
 
         ApplicationContext context = SpringUtil.getApplicationContext();
         final GrpcServer grpcServer = context.getBean(GrpcServer.class);
+        // 启动GrpcServer，监听客户端请求
         grpcServer.start();
         grpcServer.blockUtilShutdown();
-//        ZkUtil zkUtil = context.getBean(ZkUtil.class);
-
-//        bean.createPersistentNode("/test", "111");
-//        System.out.println("<<<<<<" + bean.getData("/test", new CustomWatcher()));
     }
 }

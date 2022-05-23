@@ -1,6 +1,7 @@
 package com.example.grpcjavapool.pool;
 
 import com.example.grpcjavapool.gen.*;
+import com.example.grpcjavapool.pool.resolver.ZkNameResolverProvider;
 import io.grpc.*;
 
 import java.util.concurrent.TimeUnit;
@@ -15,15 +16,19 @@ public class GrpcClient {
     private GreeterGrpc.GreeterBlockingStub blockingStub; // 定义一个阻塞式同步存根
 
     public GrpcClient(String host, int port) {
-        this.channel = ManagedChannelBuilder.forAddress(host, port)
+        this.channel = ManagedChannelBuilder
+                .forTarget("zk://localhost:2181") // zk服务器地址
                 .keepAliveTime(10, TimeUnit.SECONDS) // 设置channel保活 发送PING帧最小时间间隔，用来确定空闲连接是否仍然有效
-                .keepAliveTimeout(3,TimeUnit.SECONDS) // 超过KeepAliveTimeout，关闭连接
+                .keepAliveTimeout(3, TimeUnit.SECONDS) // 超过KeepAliveTimeout，关闭连接
                 .keepAliveWithoutCalls(true) // 即使没有请求进行，也可以发送keepalive ping
+                .nameResolverFactory(new ZkNameResolverProvider()) // 服务发现配置
+                .defaultLoadBalancingPolicy("round_robin") // 负载均衡，轮询策略
+                .idleTimeout(30, TimeUnit.MINUTES) // 空闲超时，将断开所有连接和nameResolver、LB
+                .enableRetry() // 开启重试
+                .maxRetryAttempts(3) // 最大重试次数
                 .usePlaintext()
                 .build();
         this.blockingStub = GreeterGrpc.newBlockingStub(channel).withCompression("gzip");
-        // this.channel = null;
-        // this.blockingStub = null;
     }
 
     // 定义客户端方法
@@ -31,8 +36,6 @@ public class GrpcClient {
         HelloRequest request = HelloRequest.newBuilder().setName(name).build();
         HelloReply response;
         try {
-            // channel = ManagedChannelBuilder.forAddress("127.0.0.1", 9099).usePlaintext().build();
-            // blockingStub = GreeterGrpc.newBlockingStub(channel).withCompression("gzip");
             response = blockingStub.sayHello(request);
         } catch (StatusRuntimeException e) {
             System.out.println("gRPC call sayHello fail: " + e.getMessage());

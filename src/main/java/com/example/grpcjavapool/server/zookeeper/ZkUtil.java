@@ -1,6 +1,5 @@
 package com.example.grpcjavapool.server.zookeeper;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import io.netty.util.internal.StringUtil;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
